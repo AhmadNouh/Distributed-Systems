@@ -1,17 +1,11 @@
-# 1. استخدام نسخة جافا 21 الرسمية والمدعومة البديلة لـ openjdk
 FROM eclipse-temurin:21-jdk-jammy
 
-# 2. تحديد مجلد العمل داخل السيرفر
 WORKDIR /app
 
-# 3. نسخ كل ملفات المشروع من GitHub
 COPY . .
 
-# 4. إنشاء مجلد نظيف out وترجمة ملفات موازن الأحمال
-RUN mkdir out && javac -d out "LoadBalancing/src/"*.java
+RUN cd "LoadBalancing/src" && javac *.java
 
-# 5. فتح المنفذ الشبكي 8080
 EXPOSE 8080
 
-# 6. أمر التشغيل النهائي
-CMD ["java", "-cp", "out", "LoadBalancer"]
+CMD ["java", "-cp", "LoadBalancing/src", "LoadBalancer"]
