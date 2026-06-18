@@ -1,4 +1,4 @@
-package Load_Balancer;
+package LoadBalancer;
 
 import java.io.*;
 import java.net.*;
