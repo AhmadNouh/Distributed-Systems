@@ -1,11 +1,17 @@
+# 1. استخدام نسخة جافا الرسمية
 FROM openjdk:21-jdk-slim
 
+# 2. تحديد مجلد العمل داخل السيرفر
 WORKDIR /app
 
+# 3. نسخ كل ملفات المشروع من GitHub
 COPY . .
 
-RUN javac "Load Balancer/src/"*.java
+# 4. إنشاء مجلد نظيف بدون مسافات واسمه out وضخ ملفات موازن الأحمال المترجمة بداخلة
+RUN mkdir out && javac -d out "LoadBalancing/src/"*.java
 
+# 5. فتح المنفذ الشبكي 8080
 EXPOSE 8080
 
-CMD ["java", "-cp", "Load Balancer/src", "LoadBalancer"]
+# 6. أمر التشغيل القائم على المجلد النظيف المترجم
+CMD ["java", "-cp", "out", "LoadBalancer"]
